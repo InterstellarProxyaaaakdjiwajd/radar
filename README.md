@@ -1,8 +1,9 @@
-<html lang="en" >
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Windy Radar with Invisible Menu Button</title>
+  <title>Windy Radar Clean</title>
   <style>
     body {
       margin: 0;
@@ -36,7 +37,6 @@
       display: block;
     }
 
-    /* Hide the menu button and disable interaction */
     #menuButton {
       opacity: 0;
       pointer-events: none;
@@ -53,66 +53,37 @@
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
-
-    <div id="layerMenu" role="menu" aria-label="Select Windy map layer" style="display:none;">
-      <label for="layerSelect">Choose Map Layer:</label>
-      <select id="layerSelect" aria-labelledby="layerSelectLabel" role="listbox">
-        <option value="radar">Radar</option>
-        <option value="satellite">Satellite</option>
-        <option value="wind">Wind</option>
-        <option value="temp">Temperature</option>
-        <option value="clouds">Clouds</option>
-        <option value="waves">Waves</option>
-        <option value="pressure">Pressure</option>
-        <option value="humidity">Humidity</option>
-        <option value="snow">Snow</option>
-        <option value="gust">Gust</option>
-        <option value="dust">Dust</option>
-        <option value="pm10">PM10</option>
-        <option value="pm25">PM2.5</option>
-        <option value="fire">Fire</option>
-      </select>
-    </div>
   </div>
 
   <script>
     const iframe = document.getElementById('radarFrame');
-    const layerSelect = document.getElementById('layerSelect');
     const menuButton = document.getElementById('menuButton');
-    const layerMenu = document.getElementById('layerMenu');
 
-    let currentLat = 39.8283; // default USA center
+    let currentLat = 39.8283; // Default to center of USA
     let currentLon = -98.5795;
     let currentZoom = 5;
+    const defaultOverlay = "radar";
 
     function loadRadarOverlay(overlay) {
       const src = `https://embed.windy.com/embed2.html?lat=${currentLat}&lon=${currentLon}&zoom=${currentZoom}&level=surface&overlay=${overlay}&menu=false&message=false&marker=true&type=map&location=coordinates&detailLat=${currentLat}&detailLon=${currentLon}`;
       iframe.src = src;
     }
 
-    // Remove event listeners on menuButton so it does nothing
-    // Simplest way: clone and replace
+    // Remove functionality from menuButton
     menuButton.replaceWith(menuButton.cloneNode(true));
 
-    // Load new overlay on selection
-    layerSelect.addEventListener('change', () => {
-      loadRadarOverlay(layerSelect.value);
-      layerMenu.style.display = 'none';
-      menuButton.setAttribute('aria-expanded', 'false');
-    });
-
-    // On page load, get location and load default overlay
+    // On page load, get location and load radar
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         pos => {
           currentLat = pos.coords.latitude.toFixed(4);
           currentLon = pos.coords.longitude.toFixed(4);
-          loadRadarOverlay(layerSelect.value);
+          loadRadarOverlay(defaultOverlay);
         },
-        () => loadRadarOverlay(layerSelect.value)
+        () => loadRadarOverlay(defaultOverlay)
       );
     } else {
-      loadRadarOverlay(layerSelect.value);
+      loadRadarOverlay(defaultOverlay);
     }
   </script>
 
