@@ -54,6 +54,27 @@
       <div class="dot"></div>
     </div>
 
+    <div id="layerMenu" role="menu" aria-label="Select Windy map layer" style="display:none;">
+      <label for="layerSelect">Choose Map Layer:</label>
+      <select id="layerSelect" aria-labelledby="layerSelectLabel" role="listbox">
+        <option value="radar">Radar</option>
+        <option value="satellite">Satellite</option>
+        <option value="wind">Wind</option>
+        <option value="temp">Temperature</option>
+        <option value="clouds">Clouds</option>
+        <option value="waves">Waves</option>
+        <option value="pressure">Pressure</option>
+        <option value="humidity">Humidity</option>
+        <option value="snow">Snow</option>
+        <option value="gust">Gust</option>
+        <option value="dust">Dust</option>
+        <option value="pm10">PM10</option>
+        <option value="pm25">PM2.5</option>
+        <option value="fire">Fire</option>
+      </select>
+    </div>
+  </div>
+
   <script>
     const iframe = document.getElementById('radarFrame');
     const layerSelect = document.getElementById('layerSelect');
